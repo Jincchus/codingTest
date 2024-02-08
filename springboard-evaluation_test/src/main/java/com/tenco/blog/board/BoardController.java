@@ -34,21 +34,13 @@ public class BoardController {
 //        return "/index";
 //    }
     @GetMapping("/")
-    public String index(Model model, @PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC)Pageable pageable) {
+    public String index(Model model, @PageableDefault(size = 5, sort = "no", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<Board> boardPageList = boardService.getPagingList(pageable);
-        int totalPages = boardPageList.getTotalPages();
-        int currentPage = pageable.getPageNumber() + 1;
-        int startPage = Math.max(1, currentPage -5);
-        int endPage = Math.min(startPage + 4, totalPages);
-
-
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        model.addAttribute("boardPageList", boardService.getPagingList(pageable));;
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("boardPageList", boardPageList);
+        model.addAttribute("currentPage", pageable.get)
+        model.addAttribute("check", boardService.getListCheck(pageable));
 
         return "index";
     }
