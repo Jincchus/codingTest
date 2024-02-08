@@ -11,7 +11,7 @@
             <th></th>
         </tr>
         </thead>
-        {{#boardList}}
+        {{#boardPageList}}
         <tbody>
         <tr>
             <td>{{no}}</td>
@@ -30,8 +30,29 @@
             </td>
         </tr>
         </tbody>
-        {{/boardList}}
+        {{/boardPageList}}
     </table>
+
+    <ul class="pagination justify-content-center">
+        {{#startPage}}
+            <li class="page-item"><a class="page-link" href="?page={{previous}}">Previous</a></li>
+        {{/startPage}}
+
+        {{#currentPage}}
+            <li class="page-item active"><a class="page-link" href="?page={{currentPage}}">{{currentPage}}</a></li>
+        {{/currentPage}}
+
+        {{#endPage}}
+            <li class="page-item"><a class="page-link" href="?page={{next}}">Next</a></li>
+        {{/endPage}}
+
+        {{^endPage}}
+            {{#next}}
+            {{/next}}
+        {{/endPage}}
+    </ul>
+
+
 
 </div>
 {{> layout/footer}}
