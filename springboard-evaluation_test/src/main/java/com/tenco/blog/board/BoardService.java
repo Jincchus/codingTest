@@ -1,9 +1,11 @@
 package com.tenco.blog.board;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -12,6 +14,7 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Transactional
     public void saveBoard(BoardSaveFormDto dto){
 
         Board board = Board.builder()
@@ -23,8 +26,13 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<Board> getAllList(){
-        return boardRepository.findAll();
+    //public List<Board> getAllList(){
+    //    return boardRepository.findAll();
+    //}
+
+    @Transactional
+    public Page<Board> getPagingList(Pageable pageable){
+        return boardRepository.findAll(pageable);
     }
 
     public Optional<Board> getBoardByNo(Integer no){
@@ -35,6 +43,7 @@ public class BoardService {
         boardRepository.deleteById(no);
     }
 
+    @Transactional
     public Board updateBoard(int no ,BoardSaveFormDto dto ){
 
         Board board = boardRepository.findById(no).orElseThrow();
